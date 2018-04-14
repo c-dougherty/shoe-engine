@@ -54,10 +54,10 @@ def home(request):
 
 def search(request,query,start):
       
-       size=10       
+       size=50
  
-       res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"match":{"name": query} }, 'highlight':{'fields':{'name':{} }}})
-
+       res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"match":{"name": query} }, "sort":[{"reg-price":{"order":"asc"}}, "_score"], 'highlight':{'fields':{'name':{} }}})
+       #res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"match":{"name": query} }, 'highlight':{'fields':{'name':{} }}})
        if not res.get('hits'):
 
             return render(request, 'rsc/error.html',{'errormessage':'Your query returned zero results, please try another query'})
@@ -75,7 +75,10 @@ def search(request,query,start):
                     resultid= result['_id'] 
                     f = SearchResult(resultid) #calling the object class that is defined inside models.py
 
-                    f.content= result['_source']['reg-price']
+                    if 'sale-price' in result['_source']:
+                        f.content= result['_source']['reg-price'] - result['_source']['sale-price']
+                    else:
+                        f.content= 0.0
                     
                     # get url 
                     url = result['_source']['url']
@@ -83,7 +86,7 @@ def search(request,query,start):
                     
                     f.title = result['_source']['name']
                     if 'sale-price' in result['_source']:
-                        f.description = "Sale price: $" + str(result['_source']['sale-price']) + ", Regular price: $" + str(result['_source']['reg-price'])
+                        f.description = "Price Difference: $" + str(result['_source']['reg-price'] - result['_source']['sale-price']) + ", Sale price: $" + str(result['_source']['sale-price']) + ", Regular price: $" + str(result['_source']['reg-price'])
                     else:
                         f.description = "Price: $" + str(result['_source']['reg-price'])
 
@@ -96,6 +99,7 @@ def search(request,query,start):
                     #f.filename= str(imageid)+'.png'
                     SearchResults.append(f)
                 
+                SearchResults.sort(key=lambda f: f.content, reverse=True)
                 return render(request, 'rsc/htmlresult.html', {'results':SearchResults ,'q': query,\
 							  'total':totalresultsNumFound, 'i':str(start+1)\
 							  , 'j':str(len(results)+start) })
