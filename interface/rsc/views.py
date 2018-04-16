@@ -56,8 +56,8 @@ def search(request,query,start):
       
        size=50
  
-       res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"match":{"name": query} }, "sort":[{"reg-price":{"order":"asc"}}, "_score"], 'highlight':{'fields':{'name':{} }}})
-       #res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"match":{"name": query} }, 'highlight':{'fields':{'name':{} }}})
+       #res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"match":{"name": query} }, "sort":[{"reg-price":{"order":"asc"}}, "_score"], 'highlight':{'fields':{'name':{} }}})
+       res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"multi_match":{"query": query, "fields": ["brand", "name"]}}, "sort":[{"reg-price":{"order":"asc"}}, "_score"]})
        if not res.get('hits'):
 
             return render(request, 'rsc/error.html',{'errormessage':'Your query returned zero results, please try another query'})
@@ -84,7 +84,7 @@ def search(request,query,start):
                     url = result['_source']['url']
                     f.url = url.split('//')[1]     # remove web protocol from url
                     
-                    f.title = result['_source']['name']
+                    f.title = result['_source']['brand'] + " " + result['_source']['name']
                     if 'sale-price' in result['_source']:
                         f.description = "Price Difference: $" + str(result['_source']['reg-price'] - result['_source']['sale-price']) + ", Sale price: $" + str(result['_source']['sale-price']) + ", Regular price: $" + str(result['_source']['reg-price'])
                     else:
