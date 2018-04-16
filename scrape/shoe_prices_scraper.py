@@ -8,6 +8,7 @@
 import sys
 import requests
 import nike_parser
+import altra_parser
 import saucony_parser
 
 def fetch(url):
@@ -23,6 +24,10 @@ def main():
         nike_url = "https://store.nike.com/us/en_us/pw/mens-running-shoes/7puZ8yzZoi3"
 	r = fetch(nike_url)
 	nike_parser.parse(r.text, r.url)
+
+        altra_url = "https://www.altrarunning.com/running-shoes/men"
+        r = fetch(altra_url)
+        altra_parser.parse(r.text, r.url)
 
 #        saucony_url = "https://www.saucony.com/en/mens-running-sale/"
 #        r = fetch(saucony_url)
