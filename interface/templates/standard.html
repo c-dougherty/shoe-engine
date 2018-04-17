@@ -3,23 +3,19 @@
 <head>
 <META http-equiv="Content-Type" content="text/html; charset=UTF-8">
 {% load staticfiles %}
-<link rel="stylesheet" type="text/css" href="{% static "rsc/chem.css" %}" />
 <link rel="stylesheet" type="text/css" href="{% static "rsc/result.css" %}" />
 <link rel="stylesheet" type="text/css" href="{% static "rsc/reset.css" %}" />
 <link rel="stylesheet" type="text/css" href="{% static "rsc/view.css" %}" />
-<link rel="stylesheet" type="text/css" href="http://visapi-gadgets.googlecode.com/svn/trunk/termcloud/tc.css"/>
+<link rel="stylesheet" type="text/css" href="{% static "rsc/standard.css" %}" />
 {% load staticfiles %}
-<script src="{% static "rsc/tc-mod.js" %}"></script>
 
 
-<style type="text/css">
-body{
-font-family:Arial, Helvetica, sans-serif;
+<!--<style type="text/css">
+        body{
+        font-family:Arial, Helvetica, sans-serif;
 
-}
-*{margin:0;padding:0;}
-
-
+        }
+        *{margin:0;padding:0;}
 	
 	#searchword
 	{
@@ -36,15 +32,15 @@ font-family:Arial, Helvetica, sans-serif;
 	}
 	#search_box
 	{
-	padding:4px; border:solid 1px #666666; width:300px; height:30px; font-size:18px;-moz-border-radius: 6px;-webkit-border-radius: 6px;
+	margin-left:0pt auto; padding:4px; border:solid 1px #666666; width:290px; height:20px; font-size:18px;-moz-border-radius: 6px;-webkit-border-radius: 6px;
 	}
 	.search_button
 	{
-	 background-color: #4D90FE;border:#000000 solid 1px; padding-left:9px;padding-right:9px;padding-top:9px;padding-bottom:9px; color:#000; font-weight:bold; font-size:16px;-moz-border-radius: 6px;-webkit-border-radius: 6px;
+	 margin-right:0pt auto; padding:4px; background-color: #4D90FE;border:#000000 solid 1px; width:100px; height:40px; color:#000; font-weight:bold; font-size:16px;-moz-border-radius: 6px;-webkit-border-radius: 6px;
 	}
 	
 
-</style>
+</style>-->
 
 <script type="text/javascript">
 function populateSearchBox() {
@@ -58,23 +54,26 @@ function populateSearchBox() {
 <body onLoad="populateSearchBox();">
 
 <div id='container' style="width: 960px; margin:0pt auto">
-<div id="search_container" style=" top: 7%; left: 2%; width: 90%; height: 10%;;padding-top:20px">
+<!--<div id="search_container" style=" top: 7%; left: 2%; width: 90%; height: 10%;;padding-top:20px">-->
+<div id="search_container" style="top: 10%; left: 25%; width: 50%; height: 50%;">
 
-<div style="float:left; padding-right:10px">
+<div style="float:top; margin:0pt auto">
 {% load staticfiles %}
 <a  title="Lucidworks Fusion Interface" href="/">
-<img id=logo src="{% static "rsc/winged-shoe.jpg" %}" alt="winged shoe logo"/>
+<img id=logo src="{% static "rsc/winged-shoe.jpg" %}" alt="winged shoe logo" style="padding 4px;"/>
 </a>
 </div>
 
-
-<form id="searchform"  method="post" action="../">
-  {% csrf_token %}
-  <input type="text" name="q" id="search_box" class="search_box"/>
-  <input type="hidden" name="qjs" id="q_js" value="{{ q }}" />
-  <input type="submit" value="Search" class="search_button" /><br />
-  <span style="color:#666666; font-size:14px; font-family:Arial, Helvetica, sans-serif;">Try searching by shoe name or brand</span>
-</form>
+<div style="padding-top:15px">
+    <!-- id="searchform"-->
+    <form method="post" action="../">
+      {% csrf_token %}
+          <input type="text" name="q" id="search_box" class="search_box"/>
+          <input type="hidden" name="qjs" id="q_js" value="{{ q }}" />
+          <input type="submit" value="Search" class="search_button" /></br >
+        <span style="color:#666666; font-size:14px; font-family:Arial, Helvetica, sans-serif;">Try searching by shoe name or brand</span>
+    </form>
+</div>
 
 </div>
 
