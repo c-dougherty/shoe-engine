@@ -15,9 +15,6 @@ PATH = '/home/cdougherty/Documents/ist441_project'
 # parse nike men's running shoes html page
 def parse(file, url):
 
-        # create JSON document
-        #json_doc = []
-
         # create index
         index = 0
 

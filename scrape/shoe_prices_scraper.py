@@ -9,6 +9,9 @@ import sys
 import requests
 import nike_parser
 import altra_parser
+import puma_parser
+import merrell_parser
+import underarmour_parser
 import saucony_parser
 
 def fetch(url):
@@ -25,9 +28,21 @@ def main():
 	r = fetch(nike_url)
 	nike_parser.parse(r.text, r.url)
 
+        merrell_url = 'https://www.merrell.com/US/en/mens-trail-running/'
+        r = fetch(merrell_url)
+        merrell_parser.parse(r.text, r.url)
+
+        underarmour_url = 'https://www.underarmour.com/en-us/mens/footwear/running/g/39rha'
+        r = fetch(underarmour_url)
+        underarmour_parser.parse(r.text, r.url)
+
         altra_url = "https://www.altrarunning.com/running-shoes/men"
         r = fetch(altra_url)
         altra_parser.parse(r.text, r.url)
+
+        #puma_url = "https://us.puma.com/en_US/men/shoes/runningtraining"
+        #r = fetch(puma_url)
+        #puma_parser.parse(r.text, r.url)
 
 #        saucony_url = "https://www.saucony.com/en/mens-running-sale/"
 #        r = fetch(saucony_url)
