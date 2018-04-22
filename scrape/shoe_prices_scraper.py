@@ -12,6 +12,8 @@ import altra_parser
 import puma_parser
 import merrell_parser
 import underarmour_parser
+import newbalance_parser
+import sketchers_parser
 import saucony_parser
 
 def fetch(url):
@@ -24,6 +26,15 @@ def fetch(url):
 def main():
 
 	# fetch html pages
+
+        newbalance_url = "http://www.newbalance.com/men/shoes/running/"
+        r = fetch(newbalance_url)
+        newbalance_parser.parse(r.text, r.url)
+
+        sketchers_url = "https://www.skechers.com/en-us/men/styles/shoes/performance"
+        r = fetch(sketchers_url)
+        sketchers_parser.parse(r.text, r.url)
+
         nike_url = "https://store.nike.com/us/en_us/pw/mens-running-shoes/7puZ8yzZoi3"
 	r = fetch(nike_url)
 	nike_parser.parse(r.text, r.url)
