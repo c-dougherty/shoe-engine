@@ -46,7 +46,7 @@ def parse(file, url):
 
                 # get shoe price
                 price = item.find('div', class_='product-pricing')
-                if price.find('div', class_='sales') == None:
+                if price.find('span', class_='sales') == None:
                     data['reg-price'] =  float(price.get_text().replace('$',''))
                 else:
                     sale_price = price.find('span', class_='sales').get_text()
@@ -55,12 +55,11 @@ def parse(file, url):
                     data['reg-price'] = float(re.findall('\d+\.\d+', reg_price)[0])
 
                 # append  to JSON document
-                if not skip:
-                    with open('newbalance.json', 'a') as f:
-                        json.dump({"index":{"_id": index}}, f)
-                        f.write("\n")
-                        json.dump(data, f)
-                        f.write("\n")
+                with open('newbalance.json', 'a') as f:
+                    json.dump({"index":{"_id": index}}, f)
+                    f.write("\n")
+                    json.dump(data, f)
+                    f.write("\n")
 
             except Exception as e:
                     e
