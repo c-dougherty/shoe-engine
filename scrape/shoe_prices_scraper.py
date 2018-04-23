@@ -14,6 +14,8 @@ import merrell_parser
 import underarmour_parser
 import newbalance_parser
 import sketchers_parser
+import brooks_parser
+import journey_adidas_parser
 import saucony_parser
 
 def fetch(url):
@@ -50,6 +52,14 @@ def main():
         altra_url = "https://www.altrarunning.com/running-shoes/men"
         r = fetch(altra_url)
         altra_parser.parse(r.text, r.url)
+
+	brooks_url = "http://www.brooksrunning.com/en_us/all-mens-running-shoes/?start=0"
+        r = fetch(brooks_url)
+	brooks_parser.parse(r.text, r.url)
+
+	journey_adidas_url = "https://www.journeys.com/search?keywords=mens%20shoes&gender=Men&ref=jy_visnav_mens&brand=Adidas&category=Running%20Shoes"
+        r = fetch(journey_adidas_url)
+	journey_adidas_parser.parse(r.text, r.url)
 
         #puma_url = "https://us.puma.com/en_US/men/shoes/runningtraining"
         #r = fetch(puma_url)
