@@ -1,5 +1,4 @@
 from django.http import HttpResponse
-#from django.shortcuts import render_to_response
 from django.shortcuts import render
 from models import *
 from django.template.context import RequestContext
@@ -8,7 +7,6 @@ from django.shortcuts import get_object_or_404
 import requests
 from settings import *
 from manage import * 
-#from bs4 import BeautifulSoup
 from elasticsearch import Elasticsearch, helpers
 
 ERR_QUERY_NOT_FOUND='<h1>Query not found</h1>'
@@ -41,8 +39,9 @@ def home(request):
             else:
                 errormessage='Please use larger queries'
                 return render(request, 'rsc/index.html',{'errormessage':errormessage})
-    else: # it's a get request, can come from two sources. if start=0, or start not in GET dictionary, someone is requesting the page 
-         #for the first time 
+    else: 
+        # it's a get request, can come from two sources. if start=0, or start not in GET dictionary, someone is requesting the page 
+        # for the first time 
    
         start=int(request.GET.get('start',0))
         query=request.GET.get('q',None)
@@ -53,11 +52,11 @@ def home(request):
                 
 
 def search(request,query,start):
-      
-       size=50
+     
+       # set query result size
+       size = 50
  
-       #res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"match":{"name": query} }, "sort":[{"reg-price":{"order":"asc"}}, "_score"], 'highlight':{'fields':{'name':{} }}})
-       res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"multi_match":{"query": query, "fields": ["brand", "name"]}}, "sort":[{"reg-price":{"order":"asc"}}, "_score"]})
+       res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"multi_match":{"query": query, "fields": ["brand", "name"]}}, "sort":[{"sale-price":{"order":"asc"}},{"reg-price":{"order":"asc"}}, "_score"]})
        if not res.get('hits'):
 
             return render(request, 'rsc/error.html',{'errormessage':'Your query returned zero results, please try another query'})
@@ -66,7 +65,6 @@ def search(request,query,start):
        else:
             print "search done"
             totalresultsNumFound= res['hits']['total']
-            #hlresults=r.json()['highlighting']
             results=res['hits']['hits']
             SearchResults=[] 
             if len(results) > 0:
@@ -90,13 +88,6 @@ def search(request,query,start):
                     else:
                         f.description = "Price: $" + str(result['_source']['reg-price'])
 
-                    #f.description = " ".join(f.description).encode("utf-8")
-                    '''
-                    if len(result.get('category',[])) > 0:
-                       f.category=result['category'][0].encode("utf-8") 
-                    '''
-                    #trying to use the location field to get the file name to display the image
-                    #f.filename= str(imageid)+'.png'
                     SearchResults.append(f)
                 
                 SearchResults.sort(key=lambda f: f.content, reverse=True)
