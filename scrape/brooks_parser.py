@@ -13,7 +13,6 @@ def parse(file, url):
 
 	soup = BeautifulSoup(file, 'html.parser')
 	for item in soup.find_all('div', class_='o-block--related-product__product-card col-sm-1 col-md-3 col-lg-3'):
-            print(item)
 
             #create dictionary of data
             data = {}
