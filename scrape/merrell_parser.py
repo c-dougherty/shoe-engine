@@ -50,8 +50,8 @@ def parse(file, url):
                     data['price-diff'] = 0.0
 
                 with open('merrell.json', 'a') as f:
-                    json.dump({"index":{"_id": index}}, f)
-                    f.write("\n")
+                    #json.dump({"index":{"_id": index}}, f)
+                    #f.write("\n")
                     json.dump(data, f)
                     f.write("\n")
 

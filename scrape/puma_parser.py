@@ -62,8 +62,8 @@ def parse(file, url):
 
 			# append  to JSON document
                         with open('puma.json', 'a') as f:
-                            json.dump({"index":{"_id": index}}, f)
-                            f.write("\n")
+                            #json.dump({"index":{"_id": index}}, f)
+                            #f.write("\n")
                             json.dump(data, f)
                             f.write("\n")
 
