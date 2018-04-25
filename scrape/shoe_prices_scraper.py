@@ -13,7 +13,7 @@ import puma_parser
 import merrell_parser
 import underarmour_parser
 import newbalance_parser
-import sketchers_parser
+import skechers_parser
 import brooks_parser
 import journey_adidas_parser
 import saucony_parser
@@ -33,9 +33,9 @@ def main():
         r = fetch(newbalance_url)
         newbalance_parser.parse(r.text, r.url)
 
-        sketchers_url = "https://www.skechers.com/en-us/men/styles/shoes/performance"
-        r = fetch(sketchers_url)
-        sketchers_parser.parse(r.text, r.url)
+        skechers_url = "https://www.skechers.com/en-us/men/styles/shoes/performance"
+        r = fetch(skechers_url)
+        skechers_parser.parse(r.text, r.url)
 
         nike_url = "https://store.nike.com/us/en_us/pw/mens-running-shoes/7puZ8yzZoi3"
 	r = fetch(nike_url)
@@ -65,9 +65,9 @@ def main():
         #r = fetch(puma_url)
         #puma_parser.parse(r.text, r.url)
 
-#        saucony_url = "https://www.saucony.com/en/mens-running-sale/"
-#        r = fetch(saucony_url)
-#        saucony_parser.parse(r.text, r.url)
+        #saucony_url = "https://www.saucony.com/en/mens-running-sale/"
+        #r = fetch(saucony_url)
+        #saucony_parser.parse(r.text, r.url)
 
 if __name__ == '__main__':
     main()

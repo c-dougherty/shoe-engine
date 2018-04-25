@@ -54,6 +54,12 @@ def parse(file, url):
                         else:
                                 data['reg-price'] = float(price['data-lp'].replace('$',''))
 
+                        # calculate shoe price difference
+                        if 'sale-price' in data:
+                            data['price-diff'] = data['reg-price'] - data['sale-price']
+                        else:
+                            data['price-diff'] = 0.0
+
 			# append  to JSON document
                         with open('nike.json', 'a') as f:
                             json.dump({"index":{"_id": index}}, f)

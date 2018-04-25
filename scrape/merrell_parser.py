@@ -43,6 +43,12 @@ def parse(file, url):
                         reg_price = container.find("span",{"class":"product-standard-price"})
                         data['reg-price'] = float(reg_price.text.replace('$',''))
                 
+                # calculate shoe price difference
+                if 'sale-price' in data:
+                    data['price-diff'] = data['reg-price'] - data['sale-price']
+                else:
+                    data['price-diff'] = 0.0
+
                 with open('merrell.json', 'a') as f:
                     json.dump({"index":{"_id": index}}, f)
                     f.write("\n")

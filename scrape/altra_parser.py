@@ -60,6 +60,23 @@ def parse(file, url):
                     data['sale-price'] = float(price.find('div', class_='sale').get_text().replace('$',''))
                     data['reg-price'] = float(price.find('div', class_='has-sale').get_text().replace('$',''))
 
+                # calculate shoe price difference
+                if 'sale-price' in data:
+                    data['price-diff'] = data['reg-price'] - data['sale-price']
+                else:
+                    data['price-diff'] = 0.0
+
+                # skip item if duplicate
+                #try:
+                #    with open('altra.json', 'r') as f:
+                #        for line in f:
+                #            print(line)
+                #            j = json.load(line)
+                #            if data == j:
+                #                skip = True
+                #except Exception as ex:
+                #    ex
+
                 # append  to JSON document
                 if not skip:
                     with open('altra.json', 'a') as f:

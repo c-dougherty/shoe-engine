@@ -1,5 +1,5 @@
 # This python file contains functions for parsing
-# an sketchers running shoe html page into a JSON object
+# an skechers running shoe html page into a JSON object
 
 # Author: Connor Dougherty
 # Last Updated: April 22, 2018
@@ -13,7 +13,7 @@ import re
 # path to JSON collection
 PATH = '/home/cdougherty/Documents/ist441_project'
 
-# parse sketchers running men's running shoes html page
+# parse skechers running men's running shoes html page
 def parse(file, url):
 
         # create index
@@ -32,11 +32,11 @@ def parse(file, url):
                 index = index + 1
 
                 # get brand
-                data['brand'] = 'SKETCHERS'
+                data['brand'] = 'SKECHERS'
 
                 # get shoe url
                 url = item['data-clicked-style-url']
-                data['url'] = "https://www.sketchers.com" + url
+                data['url'] = "https://www.skechers.com" + url
 
                 # get shoe name
                 name = item.find('p', class_='product-name').get_text()
@@ -49,8 +49,14 @@ def parse(file, url):
                     data['sale-price'] = float(item.find('ins', class_='price').get_text().replace('$',''))
                     data['reg-price'] = float(item.find('del', class_='original-price').get_text().replace('$',''))
 
+                # calculate shoe price difference
+                if 'sale-price' in data:
+                    data['price-diff'] = data['reg-price'] - data['sale-price']
+                else:
+                    data['price-diff'] = 0.0
+
                 # append  to JSON document
-                with open('sketchers.json', 'a') as f:
+                with open('skechers.json', 'a') as f:
                     json.dump({"index":{"_id": index}}, f)
                     f.write("\n")
                     json.dump(data, f)

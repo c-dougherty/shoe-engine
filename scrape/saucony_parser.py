@@ -42,6 +42,12 @@ def parse(file, url):
                         reg_price = price.find('span', class_='product-standard-price')
 			data['reg-price'] = reg_price.get_text()
 
+                        # calculate shoe price difference
+                        if 'sale-price' in data:
+                            data['price-diff'] = data['reg-price'] - data['sale-price']
+                        else:
+                            data['price-diff'] = 0.0
+
 			# append  to JSON document
                         with open('saucony.json', 'a') as f:
                             json.dump({"index":{"_id": index}}, f)
