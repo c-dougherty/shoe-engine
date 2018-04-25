@@ -55,8 +55,19 @@ def search(request,query,start):
      
        # set query result size
        size = 50
- 
-       res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"multi_match":{"query": query, "fields": ["brand", "name"]}}, "sort":[{"sale-price":{"order":"asc"}},{"reg-price":{"order":"asc"}}, "_score"]})
+
+       # check for keywords in query
+       if " AND " in query:
+           # split query and perform boolean search
+           #terms = query.split(' AND ')
+           #res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"bool": {"must": {"multi_match":{"query": terms[0], "fields": ["brand", "name"]}}, "must": {"multi_match":{"query": terms[1], "fields": ["brand", "name"]}}}}, "sort":[{"price-diff":{"order":"desc"}}, {"reg-price":{"order":"asc"}}]})
+           terms = query.replace(' AND ', ' ')
+           res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"multi_match":{"query": terms, "type": "cross_fields", "fields": ["brand", "name"], "operator": "and"}}, "sort":[{"price-diff":{"order":"desc"}}, {"reg-price":{"order":"asc"}}]})
+       elif query == "ALL":
+           res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"match_all": {}}, "sort":[{"price-diff":{"order":"desc"}},{"reg-price":{"order":"asc"}}]})
+       else:
+           res = es.search(index=ELASTIC_INDEX, body= {"from": start, "size": size, "query":{"multi_match":{"query": query, "fields": ["brand", "name"]}}, "sort":[{"price-diff":{"order":"desc"}}, {"reg-price":{"order":"asc"}}, "_score"]})
+
        if not res.get('hits'):
 
             return render(request, 'rsc/error.html',{'errormessage':'Your query returned zero results, please try another query'})

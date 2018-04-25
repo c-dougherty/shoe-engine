@@ -22,7 +22,7 @@ function populateSearchBox() {
 
 <div id='container' style="width: 960px; margin:0pt auto">
 <!--<div id="search_container" style=" top: 7%; left: 2%; width: 90%; height: 10%;;padding-top:20px">-->
-<div id="search_container" style="top: 10%; left: 25%; width: 50%; height: 50%;">
+<div id="search_container" style="top: 10%; left: 25%; width: 75%; height: 50%;">
 
 <div style="float:top; margin:0pt auto">
 {% load staticfiles %}
@@ -38,7 +38,8 @@ function populateSearchBox() {
           <input type="text" name="q" id="search_box" class="search_box"/>
           <input type="hidden" name="qjs" id="q_js" value="{{ q }}" />
           <input type="submit" value="Search" class="search_button" /></br >
-        <span style="color:#666666; font-size:14px; font-family:Arial, Helvetica, sans-serif;">Try searching by shoe name or brand</span>
+          <p style="color:#666666; font-size:14px; font-family:Arial, Helvetica, sans-serif;">Try searching by brand or shoe name or both using 'AND' (e.g. 'nike AND air')</p>
+          <p style="color:#666666; font-size:14px; font-family:Arial, Helvetica, sans-serif;">To search all shoes, search 'ALL'</p>
     </form>
 </div>
 
