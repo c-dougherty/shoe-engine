@@ -101,7 +101,7 @@ def search(request,query,start):
 
                     SearchResults.append(f)
                 
-                SearchResults.sort(key=lambda f: f.content, reverse=True)
+                #SearchResults.sort(key=lambda f: f.content, reverse=True)
                 return render(request, 'rsc/htmlresult.html', {'results':SearchResults ,'q': query,\
 							  'total':totalresultsNumFound, 'i':str(start+1)\
 							  , 'j':str(len(results)+start) })
