@@ -35,7 +35,7 @@ def parse(file, url):
 			# get shoe url and image
 			img = item.find('div', class_='grid-item-image')
 			data['url'] = img.a['href']
-                        # data['img'] = img.img['src']
+                        data['img'] = img.img['src']
 
                         # extract name from url
                         name = img.a['href'].split("/pd/")

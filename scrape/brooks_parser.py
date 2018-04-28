@@ -31,6 +31,10 @@ def parse(file, url):
                 shoe = item.find('div', class_='product__box js-click')
                 data['name'] = shoe['data-itemname'].upper()
 
+                # get image
+                image = item.find('a', class_='card__slider')
+                data['img'] = image.img['data-src']
+
                 # get shoe price
                 price = item.find('p', class_='o-block--related-product__product-card__price small')
                 if price.find('span', class_='small small--strike') == None:

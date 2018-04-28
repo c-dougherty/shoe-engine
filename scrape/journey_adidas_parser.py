@@ -33,6 +33,10 @@ def parse(file, url):
                     name = item.find('span',class_='product-name')
                     data['name'] = name.get_text().upper()
 
+                    # get image
+                    image = item.find('a', class_='product-img-link')
+                    data['img'] = image.img['src']
+
                     # get price
                     price = item.find('span', class_= 'og-price')
                     data['reg-price'] = float(price.get_text().replace('$',''))

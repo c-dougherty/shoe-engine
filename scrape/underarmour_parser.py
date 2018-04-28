@@ -28,6 +28,9 @@ def parse(file, url):
                 name = product_name.text.encode('ascii', 'replace')
                 name = name.replace("?", "")
                 data['name'] = name.upper()
+
+                # get image
+                data['img'] = "https:" + tile_tile.img['src']
                 
                 price = tile_tile.find("div",{"class":"price-detail"})
                 sale = price.find("span",{"class":"price-red"})

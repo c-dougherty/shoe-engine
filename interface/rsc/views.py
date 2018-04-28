@@ -88,12 +88,21 @@ def search(request,query,start):
                         f.content= result['_source']['reg-price'] - result['_source']['sale-price']
                     else:
                         f.content= 0.0
+
+                    # get image
+                    if 'img' in result['_source']:
+                        f.image = result['_source']['img']
+                    else:
+                        f.image = "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/LoCos_Question.svg/200px-LoCos_Question.svg.png"
                     
                     # get url 
                     url = result['_source']['url']
                     f.url = url.split('//')[1]     # remove web protocol from url
-                    
+
+                    # get brand and shoe name
                     f.title = result['_source']['brand'] + " " + result['_source']['name']
+
+                    # get shoe price info
                     if 'sale-price' in result['_source']:
                         f.description = "Price Difference: $" + str(result['_source']['reg-price'] - result['_source']['sale-price']) + ", Sale price: $" + str(result['_source']['sale-price']) + ", Regular price: $" + str(result['_source']['reg-price'])
                     else:

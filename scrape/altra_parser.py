@@ -52,6 +52,10 @@ def parse(file, url):
                 name = name.replace("?", "'")
                 data['name'] = name.upper()
 
+                # get image
+                image = url.img['data-original']
+                data['img'] = 'https://www.altrarunning.com' + image
+
                 # get shoe price
                 price = item.find('div', class_='sale-price')
                 if price.find('div', class_='sale') == None:

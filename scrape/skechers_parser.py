@@ -42,6 +42,9 @@ def parse(file, url):
                 name = item.find('p', class_='product-name').get_text()
                 data['name'] = name.upper()
 
+                # get image
+                data['img'] = item.img['srcset']
+
                 # get shoe price
                 if item.find('p', class_='price') != None:
                     data['reg-price'] =  float(item.find('p', class_='price').get_text().replace('$',''))

@@ -44,6 +44,9 @@ def parse(file, url):
                 name = name.a['title']
                 data['name'] = name.upper()
 
+                # get image
+                data['img'] = item.img['data-original']
+
                 # get shoe price
                 price = item.find('div', class_='product-pricing')
                 if price.find('span', class_='sales') == None:

@@ -12,7 +12,6 @@ def parse(file, url):
     page_soup = soup(file, "html.parser")
     containers = page_soup.findAll("div",{"class":"product-tile"})
 
-
     for container in containers:
             
         try:
@@ -22,22 +21,20 @@ def parse(file, url):
                 index = index + 1
                 
                 data['brand'] = 'MERRELL'
-                #print(data['brand'])
                 
                 url = container.a['href']
                 data['url'] = url
-                #print(data['url'])
+
+                # get image
+                data['img'] = container.img['src']
                 
                 product_name = container.a['title']
                 data['name'] = product_name.upper()
-                #print(data['name'])
                 
                 if container.find("span",{"class":"product-standard-price"}) == None:
-                        #print("no sale")
                         price = container.span.text.strip()
                         data['reg-price'] = float(price.replace('$',''))
                 else:
-                        #print("sale")
                         sale_price = container.find("span",{"class":"product-sales-price"})
                         data['sale-price'] = float(sale_price.text.replace('$',''))
                         reg_price = container.find("span",{"class":"product-standard-price"})
